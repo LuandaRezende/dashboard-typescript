@@ -1,6 +1,6 @@
 import { Box, Button, Paper, TextField, useTheme, Icon } from '@mui/material';
 
-interface IToolbarProps{
+interface IToolbarListProps{
     textSearch?: string;
     showInputSearch?: boolean;
     changeTextSearch?: (newText: string) => void;
@@ -9,7 +9,7 @@ interface IToolbarProps{
     changeNewButton?: () => void;
 }
 
-export const Toolbar: React.FC<IToolbarProps> = ({
+export const ToolbarList: React.FC<IToolbarListProps> = ({
   textSearch = '', 
   showInputSearch = false, 
   changeTextSearch,
