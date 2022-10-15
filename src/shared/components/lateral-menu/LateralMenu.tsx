@@ -1,5 +1,5 @@
 import { Drawer, Box, useTheme, Avatar, Divider, List, ListItemButton, ListItemIcon, ListItemText, Icon, useMediaQuery} from '@mui/material';
-import { useAppDrawerContext } from '../../contexts';
+import { useAppDrawerContext, useAppThemeContext } from '../../contexts';
 import { useNavigate, useResolvedPath, useMatch } from 'react-router-dom';
 
 interface ILateralMenuProps{
@@ -37,6 +37,7 @@ export const LateralMenu: React.FC<ILateralMenuProps> = ({ children }) => {
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useAppDrawerContext();
+  const { toggleTheme } = useAppThemeContext();
 
   return (
     <>
@@ -56,6 +57,17 @@ export const LateralMenu: React.FC<ILateralMenuProps> = ({ children }) => {
                   route={drawerOption.route}
                   onClick={smDown ? toggleDrawerOpen : undefined} />    
               ))}
+            </List>
+          </Box>
+
+          <Box>
+            <List component="nav">
+              <ListItemButton onClick={toggleTheme}>
+                <ListItemIcon>
+                  <Icon>dark_mode</Icon>
+                </ListItemIcon>
+                <ListItemText primary='Alterar tema'/>
+              </ListItemButton>
             </List>
           </Box>
         </Box>
