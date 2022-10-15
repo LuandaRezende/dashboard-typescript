@@ -1,10 +1,10 @@
-import { ToolbarList } from '../../shared/components/toolbar-list/ToolbarList';
+import { ToobarDetail } from '../../shared/components/toobar-detail/ToobarDetail';
 import { BaseLayout } from '../../shared/layouts';
 
 export const Dashboard = () => {
   return (
     <BaseLayout title='Pagina inicial' 
-      toolbar={(<ToolbarList showInputSearch textNewButton="Nova" />)}>
+      toolbar={(<ToobarDetail />)}>
         testando uiui
     </BaseLayout>
   );
