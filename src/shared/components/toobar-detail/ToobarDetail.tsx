@@ -1,6 +1,46 @@
-import { Box, Paper, useTheme, Icon, Button, Divider } from '@mui/material';
+import { Box, Paper, useTheme, Icon, Button, Divider, Skeleton } from '@mui/material';
 
-export const ToobarDetail: React.FC = () =>{
+interface IToobarDetailProps{
+    textNewButton?: string;
+    showNewButton?: boolean;
+    showReturnButton?: boolean;
+    showDeleteButton?: boolean;
+    showSaveButton?: boolean;
+    showSaveCloseButton?: boolean;
+
+    showNewButtonLoading?: boolean;
+    showReturnButtonLoading?: boolean;
+    showDeleteButtonLoading?: boolean;
+    showSaveButtonLoading?: boolean;
+    showSaveCloseButtonLoading?: boolean;
+
+    newItem?: () => void;
+    returnItem?: () => void;
+    deleteItem?: () => void;
+    saveItem?: () => void;
+    saveAndCloseItem?: () => void;
+}
+
+export const ToobarDetail: React.FC<IToobarDetailProps> = ({
+  textNewButton = 'Novo',  
+  showNewButton = true,
+  showReturnButton = true,
+  showDeleteButton = true,
+  showSaveButton = true,
+  showSaveCloseButton = false,
+
+  showNewButtonLoading = false,
+  showReturnButtonLoading = false,
+  showDeleteButtonLoading = false,
+  showSaveButtonLoading = false,
+  showSaveCloseButtonLoading = false,
+
+  newItem,
+  returnItem,
+  deleteItem,
+  saveItem,
+  saveAndCloseItem,
+}) =>{
   const theme = useTheme();
 
   return(
@@ -14,27 +54,47 @@ export const ToobarDetail: React.FC = () =>{
       gap={1}
       component={Paper}
     >
-      <Button variant="contained" color="primary" disableElevation startIcon={<Icon>save</Icon>}>
-        Salvar
-      </Button>
+      {(showSaveButton && !showSaveButtonLoading) && (
+        <Button onClick={saveItem} variant="contained" color="primary" disableElevation startIcon={<Icon>save</Icon>}>
+            Salvar
+        </Button>
+      )}
 
-      <Button variant="outlined" color="primary" disableElevation startIcon={<Icon>save</Icon>}>
+      {showSaveButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
+
+      
+      {(showSaveCloseButton && !showSaveCloseButtonLoading) && (
+        <Button onClick={saveAndCloseItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>save</Icon>}>
         Salvar e voltar
-      </Button>
-
-      <Button variant="outlined" color="primary" disableElevation startIcon={<Icon>delete</Icon>}>
+        </Button>
+      )}
+      {showSaveCloseButtonLoading && (<Skeleton width={180} height={60}></Skeleton>)}
+      
+    
+      {(showDeleteButton && !showDeleteButtonLoading) && (
+        <Button  onClick={deleteItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>delete</Icon>}>
         Apagar
-      </Button>
-
-      <Button variant="outlined" color="primary" disableElevation startIcon={<Icon>add</Icon>}>
+        </Button>
+      )}
+      {showDeleteButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
+      
+    
+      {(showReturnButton && !showReturnButtonLoading) && (
+        <Button onClick={returnItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>add</Icon>}>
         Voltar
-      </Button>
+        </Button>
+      )}
+      {showReturnButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
 
+      
       <Divider variant="middle" orientation="vertical" />
 
-      <Button variant="outlined" color="primary" disableElevation startIcon={<Icon>arrow_back</Icon>}>
-        Novo
-      </Button>
+      {(showNewButtonLoading && !showNewButton) && (
+        <Button onClick={newItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>arrow_back</Icon>}>
+          {textNewButton}
+        </Button>
+      )}
+      {showNewButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
     </Box>
   );
 };
