@@ -1,4 +1,4 @@
-import { Box, Paper, useTheme, Icon, Button, Divider, Skeleton } from '@mui/material';
+import { Box, Paper, useTheme, Icon, Button, Divider, Skeleton, Typography, useMediaQuery } from '@mui/material';
 
 interface IToobarDetailProps{
     textNewButton?: string;
@@ -42,6 +42,8 @@ export const ToobarDetail: React.FC<IToobarDetailProps> = ({
   saveAndCloseItem,
 }) =>{
   const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm')); 
+  const mdDown = useMediaQuery(theme.breakpoints.down('md')); 
 
   return(
     <Box
@@ -56,45 +58,51 @@ export const ToobarDetail: React.FC<IToobarDetailProps> = ({
     >
       {(showSaveButton && !showSaveButtonLoading) && (
         <Button onClick={saveItem} variant="contained" color="primary" disableElevation startIcon={<Icon>save</Icon>}>
+          <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
             Salvar
+          </Typography> 
         </Button>
       )}
-
       {showSaveButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
 
-      
-      {(showSaveCloseButton && !showSaveCloseButtonLoading) && (
+      {(showSaveCloseButton && !showSaveCloseButtonLoading && !smDown && !mdDown) && (
         <Button onClick={saveAndCloseItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>save</Icon>}>
-        Salvar e voltar
+          <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
+            Salvar e voltar
+          </Typography>
         </Button>
       )}
       {showSaveCloseButtonLoading && (<Skeleton width={180} height={60}></Skeleton>)}
       
     
       {(showDeleteButton && !showDeleteButtonLoading) && (
-        <Button  onClick={deleteItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>delete</Icon>}>
-        Apagar
-        </Button>
+        <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
+          <Button onClick={deleteItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>delete</Icon>}>
+            Apagar
+          </Button>
+        </Typography>
       )}
       {showDeleteButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
       
-    
-      {(showReturnButton && !showReturnButtonLoading) && (
-        <Button onClick={returnItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>add</Icon>}>
-        Voltar
-        </Button>
-      )}
-      {showReturnButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
-
-      
-      <Divider variant="middle" orientation="vertical" />
-
-      {(showNewButtonLoading && !showNewButton) && (
-        <Button onClick={newItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>arrow_back</Icon>}>
-          {textNewButton}
-        </Button>
+      {(showNewButton && !showNewButtonLoading && !smDown) && (
+        <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
+          <Button onClick={newItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>arrow_back</Icon>}>
+            {textNewButton}
+          </Button>
+        </Typography>
       )}
       {showNewButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
+        
+      <Divider variant="middle" orientation="vertical" />
+
+      {(showReturnButton && !showReturnButtonLoading) && (
+        <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
+          <Button onClick={returnItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>add</Icon>}>
+            Voltar
+          </Button>
+        </Typography>
+      )}
+      {showReturnButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
     </Box>
   );
 };
