@@ -72,7 +72,7 @@ export const ToobarDetail: React.FC<IToobarDetailProps> = ({
           </Typography>
         </Button>
       )}
-      {showSaveCloseButtonLoading && (<Skeleton width={180} height={60}></Skeleton>)}
+      {(showSaveCloseButtonLoading && !smDown && !mdDown) && (<Skeleton width={180} height={60}></Skeleton>)}
       
     
       {(showDeleteButton && !showDeleteButtonLoading) && (
@@ -91,9 +91,9 @@ export const ToobarDetail: React.FC<IToobarDetailProps> = ({
           </Button>
         </Typography>
       )}
-      {showNewButtonLoading && (<Skeleton width={110} height={60}></Skeleton>)}
+      {(showNewButtonLoading  && !smDown) && (<Skeleton width={110} height={60}></Skeleton>)}
         
-      <Divider variant="middle" orientation="vertical" />
+      {(showReturnButton && (showNewButton || showDeleteButton || showSaveButton || showSaveCloseButton)) && (<Divider variant="middle" orientation="vertical" />)}
 
       {(showReturnButton && !showReturnButtonLoading) && (
         <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
