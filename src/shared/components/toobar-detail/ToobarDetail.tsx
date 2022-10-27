@@ -74,7 +74,6 @@ export const ToobarDetail: React.FC<IToobarDetailProps> = ({
       )}
       {(showSaveCloseButtonLoading && !smDown && !mdDown) && (<Skeleton width={180} height={60}></Skeleton>)}
       
-    
       {(showDeleteButton && !showDeleteButtonLoading) && (
         <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
           <Button onClick={deleteItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>delete</Icon>}>
