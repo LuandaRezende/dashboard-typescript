@@ -7,7 +7,7 @@ interface IToolbarListProps{
     changeTextSearch?: (newText: string) => void;
     textNewButton?: string;
     showNewButton?: boolean;
-    changeNewButton?: () => void;
+    clickAddNewPerson?: () => void;
 }
 
 export const ToolbarList: React.FC<IToolbarListProps> = ({
@@ -16,7 +16,7 @@ export const ToolbarList: React.FC<IToolbarListProps> = ({
   changeTextSearch,
   textNewButton = 'Novo',
   showNewButton = true,
-  changeNewButton,
+  clickAddNewPerson,
 }) => {
   const theme = useTheme();
  
@@ -37,7 +37,7 @@ export const ToolbarList: React.FC<IToolbarListProps> = ({
 
       <Box flex={1} display="flex" justifyContent="end">
         {(showNewButton &&
-            <Button variant="contained" color="primary" onClick={changeNewButton} disableElevation endIcon={<Icon>add</Icon>}>
+            <Button variant="contained" color="primary" onClick={clickAddNewPerson} disableElevation endIcon={<Icon>add</Icon>}>
               {textNewButton}
             </Button>
         )}

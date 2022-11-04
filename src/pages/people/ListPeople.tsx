@@ -1,6 +1,6 @@
 import { useMemo, useEffect, useState } from 'react';
-import { Box, LinearProgress, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
-import { useSearchParams } from 'react-router-dom';
+import { Box, Icon, IconButton, LinearProgress, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TableRow } from '@mui/material';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ToolbarList } from '../../shared/components';
 import { useDebounce } from '../../shared/hooks';
 import { BaseLayout } from '../../shared/layouts';
@@ -10,6 +10,7 @@ import { Environment } from '../../shared/environment';
 export const ListPeople: React.FC = () => {
   const [ searchParams, setSearchParams ] = useSearchParams(); 
   const { debounce } = useDebounce();
+  const navigate = useNavigate();
 
   const [rows, setRows] = useState<IListPeople[]>([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -20,14 +21,14 @@ export const ListPeople: React.FC = () => {
   }, [searchParams]);
 
   const page = useMemo(()=> {
-    return searchParams.get('page') || '';
+    return Number(searchParams.get('page') || '1');
   }, [searchParams]);
 
   useEffect(() => {
     setIsLoading(true);
 
     debounce(() => {
-      PeopleService.getAll(1, search).then((result) => {
+      PeopleService.getAll(page, search).then((result) => {
         setIsLoading(false);
 
         if(result instanceof Error){
@@ -39,11 +40,27 @@ export const ListPeople: React.FC = () => {
         setTotalCount(result.totalCount);
       });
     }); 
-  }, [search]);
+  }, [search, page]);
+
+  const handleDelete = (id: number) => {
+    if(confirm('Realmente deseja apagar?')){
+      PeopleService.deleteById(id)
+        .then(result => {
+          if(result instanceof Error){
+            alert(result.message);
+          }else{
+            setRows(oldRows => [
+              ...oldRows.filter(oldRow => oldRow.id !== id),
+            ]);
+            alert('Registro apagado com sucesso!');
+          }
+        });
+    }
+  };
 
   return (
     <BaseLayout title="Listagem de pessoas" 
-      toolbar={<ToolbarList textNewButton="Nova" showInputSearch textSearch={search} changeTextSearch={text => setSearchParams({search: text}, {replace: true})}/>}>
+      toolbar={<ToolbarList clickAddNewPerson={() => navigate('/people/details/new')} textNewButton="Nova" showInputSearch textSearch={search} changeTextSearch={text => setSearchParams({search: text, page: '1'}, {replace: true})}/>}>
       {rows.length > 0 && (<TableContainer component={Paper} variant="outlined" sx={{ m: 1, width: 'auto' }}>
         <Table>
           <TableHead>
@@ -56,7 +73,14 @@ export const ListPeople: React.FC = () => {
           <TableBody>
             {rows.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>Ações</TableCell>
+                <TableCell>
+                  <IconButton size="small" onClick={() => handleDelete(row.id)}>
+                    <Icon>delete</Icon>
+                  </IconButton>
+                  <IconButton size="small" onClick={() => navigate(`/people/details/${row.id}`)}>
+                    <Icon>edit</Icon>
+                  </IconButton>
+                </TableCell>
                 <TableCell>{ row.fullName }</TableCell>
                 <TableCell>{ row.email } </TableCell>
               </TableRow>
@@ -75,7 +99,12 @@ export const ListPeople: React.FC = () => {
             {(totalCount > 0 && totalCount > Environment.LINE_LIMIT) && (
               <TableRow>
                 <TableCell colSpan={3}>
-                  <Pagination count={10} variant="outlined" shape="rounded" />
+                  <Pagination 
+                    count={Math.ceil(totalCount/Environment.LINE_LIMIT)} 
+                    variant="outlined" shape="rounded" 
+                    page={page}
+                    onChange={(e, newPage) => setSearchParams({search, page: newPage.toString()}, {replace: true}) }
+                  />
                 </TableCell>
               </TableRow>
             )} 

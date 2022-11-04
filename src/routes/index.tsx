@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAppDrawerContext } from '../shared/contexts';
 import { useEffect } from 'react';
-import { Dashboard, ListPeople} from '../pages';
+import { Dashboard, ListPeople, PeopleDetails} from '../pages';
 
 export const AppRoutes = () => {
   const  { setDrawerOption } = useAppDrawerContext();
@@ -25,7 +25,7 @@ export const AppRoutes = () => {
     <Routes>
       <Route path='/home' element={<Dashboard />} />
       <Route path='/people' element={<ListPeople />} />
-      {/* <Route path='/citys/details/:id' element={<ListCitys />} /> */}
+      <Route path='/people/details/:id' element={<PeopleDetails />} />
       <Route path='*' element={<Navigate to='/home'></Navigate>} />
     </Routes>
   );
