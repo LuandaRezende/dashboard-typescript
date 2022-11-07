@@ -26,9 +26,9 @@
     },
     {
       "id": 9,
+      "fullName": "Lindsey Silva Edit",
       "email": "lindsey@gmail.com",
-      "cityId": 1,
-      "fullName": "Lindsey Silva"
+      "cityId": 1
     },
     {
       "id": 10,
@@ -71,6 +71,12 @@
       "email": "kreuza@gmail.com",
       "cityId": 1,
       "fullName": "Kreuza Silva"
+    },
+    {
+      "fullName": "Jucicleia",
+      "email": "jucicleia@gmail.com",
+      "cityId": "2",
+      "id": 18
     }
   ]
 }
