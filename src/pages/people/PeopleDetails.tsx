@@ -1,10 +1,9 @@
 import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { FormHandles } from '@unform/core';
-import { Form } from '@unform/web';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToobarDetail } from '../../shared/components';
-import { VTextField } from '../../shared/forms';
+import { VTextField, VForm } from '../../shared/forms';
 import { BaseLayout } from '../../shared/layouts';
 import { PeopleService } from '../../shared/services/api/people/PeopleService';
 
@@ -37,6 +36,12 @@ export const PeopleDetails: React.FC = () => {
           } 
         }
       ); 
+    }else{
+      formRef.current?.setData({
+        fullName: '',
+        cityId: '',
+        email: '',
+      });
     }
   }, [id]);
 
@@ -95,7 +100,7 @@ export const PeopleDetails: React.FC = () => {
       }
     >
 
-      <Form ref={formRef} onSubmit={(dataForm) => handleSave(dataForm)} initialData={{}}>
+      <VForm ref={formRef} onSubmit={(dataForm) => handleSave(dataForm)} initialData={{}}>
         <Box margin={1} display="flex" flexDirection="column" component={Paper} variant="outlined">
           <Grid container direction="column" padding={2} spacing={2}>
             
@@ -129,7 +134,7 @@ export const PeopleDetails: React.FC = () => {
           </Grid>
           
         </Box>
-      </Form>
+      </VForm>
 
       {isLoading && (
         <LinearProgress variant="indeterminate"></LinearProgress>
