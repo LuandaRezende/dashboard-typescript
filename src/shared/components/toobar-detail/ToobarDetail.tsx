@@ -27,7 +27,7 @@ export const ToobarDetail: React.FC<IToobarDetailProps> = ({
   showReturnButton = true,
   showDeleteButton = true,
   showSaveButton = true,
-  showSaveCloseButton = false,
+  showSaveCloseButton = true,
 
   showNewButtonLoading = false,
   showReturnButtonLoading = false,
@@ -44,7 +44,7 @@ export const ToobarDetail: React.FC<IToobarDetailProps> = ({
   const theme = useTheme();
   const smDown = useMediaQuery(theme.breakpoints.down('sm')); 
   const mdDown = useMediaQuery(theme.breakpoints.down('md')); 
-
+  
   return(
     <Box
       height={theme.spacing(5)} 
@@ -68,7 +68,7 @@ export const ToobarDetail: React.FC<IToobarDetailProps> = ({
       {(showSaveCloseButton && !showSaveCloseButtonLoading && !smDown && !mdDown) && (
         <Button onClick={saveAndCloseItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>save</Icon>}>
           <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
-            Salvar e voltar
+            Salvar e fechar
           </Typography>
         </Button>
       )}

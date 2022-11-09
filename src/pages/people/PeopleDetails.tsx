@@ -1,9 +1,8 @@
 import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
-import { FormHandles } from '@unform/core';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToobarDetail } from '../../shared/components';
-import { VTextField, VForm } from '../../shared/forms';
+import { VTextField, VForm, useVForm } from '../../shared/forms';
 import { BaseLayout } from '../../shared/layouts';
 import { PeopleService } from '../../shared/services/api/people/PeopleService';
 
@@ -18,7 +17,7 @@ export const PeopleDetails: React.FC = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
-  const formRef = useRef<FormHandles>(null);
+  const { formRef, save, saveAndClose, isSaveAndClose } = useVForm();
 
   useEffect(() => {
     if(id !== 'new'){
@@ -51,7 +50,11 @@ export const PeopleDetails: React.FC = () => {
         if(result instanceof Error){
           alert(result.message);
         }else{
-          navigate(`/people/details/${result}`);
+          if(isSaveAndClose()){
+            navigate('/people');
+          }else{
+            navigate(`/people/details/${result}`);
+          }
         }
       });
     }else{
@@ -61,6 +64,10 @@ export const PeopleDetails: React.FC = () => {
     
           if(result instanceof Error){
             alert(result.message);
+          }else{
+            if(isSaveAndClose()){
+              navigate('/people');
+            }
           }
         }
       ); 
@@ -91,8 +98,8 @@ export const PeopleDetails: React.FC = () => {
           showNewButton={id !== 'new'}
           showDeleteButton={id !== 'new'}
 
-          saveItem={() => formRef.current?.submitForm()}
-          saveAndCloseItem={() => formRef.current?.submitForm()}
+          saveItem={save}
+          saveAndCloseItem={saveAndClose}
           deleteItem={() => handleDelete(Number(id))}
           newItem={() => {navigate('/people/details/new');}}
           returnItem={() => {navigate('/people');}}
@@ -139,9 +146,6 @@ export const PeopleDetails: React.FC = () => {
       {isLoading && (
         <LinearProgress variant="indeterminate"></LinearProgress>
       )}
-
-      <p>detalhe de pessoas  {id}</p>
-
     </BaseLayout>
   );
 };

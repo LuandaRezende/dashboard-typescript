@@ -4,7 +4,12 @@ import { BaseLayout } from '../../shared/layouts';
 export const Dashboard = () => {
   return (
     <BaseLayout title='Pagina inicial' 
-      toolbar={(<ToobarDetail showSaveCloseButton showNewButton showSaveCloseButtonLoading />)}>
+      toolbar={(<ToobarDetail
+        showNewButton
+        showSaveCloseButtonLoading
+        showSaveCloseButton
+        showReturnButton={false}
+      />)}>
         testando uiui
     </BaseLayout>
   );
