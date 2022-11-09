@@ -2,8 +2,8 @@
   "people": [
     {
       "id": 1,
-      "fullName": "Juca Silva Edit4",
-      "email": "juca@gmail.com",
+      "fullName": "Juquinha da Costa",
+      "email": "juquinho@gmail.com",
       "cityId": 1
     },
     {
@@ -77,6 +77,18 @@
       "email": "jucicleia@gmail.com",
       "cityId": "2",
       "id": 18
+    },
+    {
+      "fullName": "Matheus Abreu",
+      "email": "matheusabc@gmail.com",
+      "cityId": "2",
+      "id": 19
+    },
+    {
+      "fullName": "Madona",
+      "email": "madonabrasil@gmail.com",
+      "cityId": "3",
+      "id": 20
     }
   ]
 }

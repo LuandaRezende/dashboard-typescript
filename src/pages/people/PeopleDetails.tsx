@@ -2,15 +2,22 @@ import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToobarDetail } from '../../shared/components';
-import { VTextField, VForm, useVForm } from '../../shared/forms';
+import { VTextField, VForm, useVForm, IVFormErrors } from '../../shared/forms';
 import { BaseLayout } from '../../shared/layouts';
 import { PeopleService } from '../../shared/services/api/people/PeopleService';
+import * as yup from 'yup';
 
 interface IFormData{
     email: string;
     fullName: string;
     cityId: number;
 }
+
+const formValidationSchema: yup.SchemaOf<IFormData> = yup.object().shape({
+  fullName: yup.string().required().min(3),
+  email: yup.string().required().email(),
+  cityId: yup.number().required(),
+});
 
 export const PeopleDetails: React.FC = () => {
   const { id = 'new' } = useParams<'id'>();
@@ -45,33 +52,52 @@ export const PeopleDetails: React.FC = () => {
   }, [id]);
 
   const handleSave = (data: IFormData) => {
-    if(id === 'new'){
-      PeopleService.create(data).then((result) => {
-        if(result instanceof Error){
-          alert(result.message);
-        }else{
-          if(isSaveAndClose()){
-            navigate('/people');
-          }else{
-            navigate(`/people/details/${result}`);
-          }
-        }
-      });
-    }else{
-      PeopleService.updateById(Number(id), {id: Number(id), ...data}).then(
-        (result) => {
-          setIsLoading(false);  
-    
-          if(result instanceof Error){
+    formValidationSchema.validate(data, {
+      abortEarly: false
+    }).then((dataValidated) => {
+      if(id === 'new'){
+        PeopleService.create(dataValidated).then((result) => {
+          if(result instanceof Error){ 
             alert(result.message);
           }else{
             if(isSaveAndClose()){
               navigate('/people');
+            }else{
+              navigate(`/people/details/${result}`);
             }
           }
+        });
+      }else{
+        PeopleService.updateById(Number(id), {id: Number(id), ...dataValidated}).then(
+          (result) => {
+            setIsLoading(false);  
+      
+            if(result instanceof Error){
+              alert(result.message);
+            }else{
+              if(isSaveAndClose()){
+                navigate('/people');
+              }
+            }
+          }
+        ); 
+      }
+    }).catch((errors: yup.ValidationError) => {
+      setIsLoading(false);  
+
+      const ValidationErrors: IVFormErrors = {};
+
+      errors.inner.forEach(error => {
+        if(!error.path){
+          return;
         }
-      ); 
-    }
+
+        ValidationErrors[error.path] = error.message;
+      });
+
+      console.log(ValidationErrors);
+      formRef.current?.setErrors(ValidationErrors);
+    });
   };
 
   const handleDelete = (id: number) => {

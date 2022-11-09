@@ -68,7 +68,7 @@ export const ToobarDetail: React.FC<IToobarDetailProps> = ({
       {(showSaveCloseButton && !showSaveCloseButtonLoading && !smDown && !mdDown) && (
         <Button onClick={saveAndCloseItem} variant="outlined" color="primary" disableElevation startIcon={<Icon>save</Icon>}>
           <Typography variant="button" whiteSpace="nowrap" textOverflow="ellipsis" overflow="hidden">
-            Salvar e fechar
+            Salvar e voltar
           </Typography>
         </Button>
       )}
