@@ -4,15 +4,15 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ToolbarList } from '../../shared/components';
 import { useDebounce } from '../../shared/hooks';
 import { BaseLayout } from '../../shared/layouts';
-import { IListPeople, PeopleService } from '../../shared/services/api/people/PeopleService';
+import { IListCitys, CitysService } from '../../shared/services/api/citys/CitysService';
 import { Environment } from '../../shared/environment';
 
-export const ListPeople: React.FC = () => {
+export const ListCitys: React.FC = () => {
   const [ searchParams, setSearchParams ] = useSearchParams(); 
   const { debounce } = useDebounce();
   const navigate = useNavigate();
 
-  const [rows, setRows] = useState<IListPeople[]>([]);
+  const [rows, setRows] = useState<IListCitys[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,7 +28,7 @@ export const ListPeople: React.FC = () => {
     setIsLoading(true);
 
     debounce(() => {
-      PeopleService.getAll(page, search).then((result) => {
+      CitysService.getAll(page, search).then((result) => {
         setIsLoading(false);
 
         if(result instanceof Error){
@@ -44,7 +44,7 @@ export const ListPeople: React.FC = () => {
 
   const handleDelete = (id: number) => {
     if(confirm('Realmente deseja apagar?')){
-      PeopleService.deleteById(id)
+      CitysService.deleteById(id)
         .then(result => {
           if(result instanceof Error){
             alert(result.message);
@@ -59,15 +59,14 @@ export const ListPeople: React.FC = () => {
   };
 
   return (
-    <BaseLayout title="Listagem de pessoas" 
-      toolbar={<ToolbarList clickAddNewPerson={() => navigate('/people/details/new')} textNewButton="Nova" showInputSearch textSearch={search} changeTextSearch={text => setSearchParams({search: text, page: '1'}, {replace: true})}/>}>
+    <BaseLayout title="Listagem de cidades" 
+      toolbar={<ToolbarList clickAddNewPerson={() => navigate('/citys/details/new')} textNewButton="Nova" showInputSearch textSearch={search} changeTextSearch={text => setSearchParams({search: text, page: '1'}, {replace: true})}/>}>
       {rows.length > 0 && (<TableContainer component={Paper} variant="outlined" sx={{ m: 1, width: 'auto' }}>
         <Table>
           <TableHead>
             <TableRow>
               <TableCell width={100}>Ações</TableCell>
-              <TableCell>Nome completo</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Nome</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -77,12 +76,11 @@ export const ListPeople: React.FC = () => {
                   <IconButton size="small" onClick={() => handleDelete(row.id)}>
                     <Icon>delete</Icon>
                   </IconButton>
-                  <IconButton size="small" onClick={() => navigate(`/people/details/${row.id}`)}>
+                  <IconButton size="small" onClick={() => navigate(`/citys/details/${row.id}`)}>
                     <Icon>edit</Icon>
                   </IconButton>
                 </TableCell>
-                <TableCell>{ row.fullName }</TableCell>
-                <TableCell>{ row.email } </TableCell>
+                <TableCell>{ row.name }</TableCell>
               </TableRow>
             ))}
           </TableBody>

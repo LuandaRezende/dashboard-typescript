@@ -90,5 +90,11 @@
       "cityId": "3",
       "id": 20
     }
+  ],
+  "citys": [
+    {
+      "id": 1,
+      "name": "Porto Alegre"
+    }
   ]
 }
