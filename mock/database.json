@@ -20,9 +20,9 @@
     },
     {
       "id": 4,
+      "fullName": "Billy Silva",
       "email": "billy@gmail.com",
-      "cityId": 1,
-      "fullName": "Billy Silva"
+      "cityId": 1
     },
     {
       "id": 9,
@@ -95,6 +95,10 @@
     {
       "id": 1,
       "name": "Porto Alegre"
+    },
+    {
+      "name": "Santa Rita do Sapucaí",
+      "id": 2
     }
   ]
 }
