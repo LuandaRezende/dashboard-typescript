@@ -100,5 +100,8 @@
       "name": "Santa Rita do Sapucaí",
       "id": 2
     }
-  ]
+  ],
+  "auth": {
+    "accessToken": "token-access-fake"
+  }
 }
