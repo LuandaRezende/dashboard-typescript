@@ -23,13 +23,11 @@ export const ToolbarList: React.FC<IToolbarListProps> = ({
   return(
     <Box 
       height={theme.spacing(5)} 
-      marginX={1}
-      padding={1} 
-      paddingX={2} 
+      paddingY={1} 
       display="flex"
       alignItems="center"
       gap={1}
-      component={Paper}>
+    >
       
       {showInputSearch && (
         <TextField value={textSearch} onChange={(e) => changeTextSearch?.(e.target.value)} size="small" placeholder={Environment.SEARCH_INPUT}></TextField>

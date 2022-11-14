@@ -41,19 +41,17 @@ export const Dashboard = () => {
     
   return (
     <BaseLayout 
-      title='Pagina inicial'
-      toolbar={<ToolbarList showNewButton={false}/>}
+      title='Dashboard'
     >
       <Box width='100%' display='flex'>
-        <Grid container margin={2}>
-          <Grid item container spacing={2} >
-            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+        <Grid container mt={2}>
+          <Grid item container spacing={2}>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={3}>
               <Card>
                 <CardContent>
                   <Typography variant='h5' align='center'>
                       Total de pessoas
                   </Typography>
-
                   <Box padding={6} display='flex' justifyContent='center' alignItems='center'>
                     {!isLoadingPeople &&(
                       <Typography variant='h1'>
@@ -71,7 +69,7 @@ export const Dashboard = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={6} lg={4} xl={3}>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={3}>
               <Card>
                 <CardContent>
                   <Typography variant='h5' align='center'>
@@ -82,6 +80,30 @@ export const Dashboard = () => {
                     {!isLoadingCitys &&(
                       <Typography variant='h1'>
                         {totalCountyCitys}
+                      </Typography>
+                    )}
+
+                    {isLoadingCitys && (
+                      <Typography>
+                        <CircularProgress size={30} />
+                      </Typography>
+                    )}
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={3}>
+              <Card>
+                <CardContent>
+                  <Typography variant='h5' align='center'>
+                      Total de vendas
+                  </Typography>
+
+                  <Box padding={6} display='flex' justifyContent='center' alignItems='center'>
+                    {!isLoadingCitys &&(
+                      <Typography variant='h1'>
+                        10
                       </Typography>
                     )}
 

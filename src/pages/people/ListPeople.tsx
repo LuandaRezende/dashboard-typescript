@@ -61,7 +61,7 @@ export const ListPeople: React.FC = () => {
   return (
     <BaseLayout title="Listagem de pessoas" 
       toolbar={<ToolbarList clickAddNewPerson={() => navigate('/people/details/new')} textNewButton="Nova" showInputSearch textSearch={search} changeTextSearch={text => setSearchParams({search: text, page: '1'}, {replace: true})}/>}>
-      {rows.length > 0 && (<TableContainer component={Paper} variant="outlined" sx={{ m: 1, width: 'auto' }}>
+      {rows.length > 0 && (<TableContainer component={Paper} variant="outlined" sx={{ mt: 1, width: 'auto' }}>
         <Table>
           <TableHead>
             <TableRow>

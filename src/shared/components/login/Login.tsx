@@ -52,7 +52,7 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
     <Box width='100vw' height='100vh' display='flex' alignItems='center' justifyContent='center'>
       <Card>
         <CardContent>
-          <Box display="flex" flexDirection="column" gap={2} width={250}>
+          <Box display="flex" flexDirection="column" gap={2} width={350}>
             <Typography variant='h6' align='center'>
                 Login
             </Typography>
@@ -82,10 +82,12 @@ export const Login: React.FC<ILoginProps> = ({ children }) => {
           </Box>
         </CardContent>
         <CardActions>
-          <Box width='100%' display='flex' justifyContent='center'>
+          <Box width='100%' display='flex' justifyContent='center' padding={2}
+          >
             <Button variant='contained' 
               onClick={handleSubmit} 
-              endIcon={isLoading ? <CircularProgress color='inherit' size={25} /> : undefined}>
+              endIcon={isLoading ? <CircularProgress color='inherit' size={25} /> : undefined}
+            >
                 entrar
             </Button>
           </Box>
