@@ -89,6 +89,12 @@
       "email": "madonabrasil@gmail.com",
       "cityId": "3",
       "id": 20
+    },
+    {
+      "fullName": "Luluzinha",
+      "email": "lulu@gmail.com",
+      "cityId": 2,
+      "id": 21
     }
   ],
   "citys": [

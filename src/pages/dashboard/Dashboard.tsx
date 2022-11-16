@@ -41,20 +41,21 @@ export const Dashboard = () => {
     
   return (
     <BaseLayout 
-      title='Dashboard'
+      title=''
+      isDashboard={true}
     >
       <Box width='100%' display='flex'>
-        <Grid container mt={2}>
+        <Grid container mt={2} ml={2} mr={2}>
           <Grid item container spacing={2}>
-            <Grid item xs={12} sm={12} md={4} lg={4} xl={3}>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               <Card>
                 <CardContent>
-                  <Typography variant='h5' align='center'>
+                  <Typography color={'#c1c1c1'} align='right' fontWeight={100}>
                       Total de pessoas
                   </Typography>
-                  <Box padding={6} display='flex' justifyContent='center' alignItems='center'>
+                  <Box padding={1} display='flex' justifyContent='right' alignItems='center'>
                     {!isLoadingPeople &&(
-                      <Typography variant='h1'>
+                      <Typography variant='h6'>
                         {totalCountyPeople}
                       </Typography>
                     )}
@@ -69,16 +70,16 @@ export const Dashboard = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={4} lg={4} xl={3}>
-              <Card>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+              <Card > 
                 <CardContent>
-                  <Typography variant='h5' align='center'>
+                  <Typography color={'#c1c1c1'} align='right' fontWeight={100}>
                       Total de cidades
                   </Typography>
 
-                  <Box padding={6} display='flex' justifyContent='center' alignItems='center'>
+                  <Box padding={1} display='flex' justifyContent='right' alignItems='center'>
                     {!isLoadingCitys &&(
-                      <Typography variant='h1'>
+                      <Typography variant='h6'>
                         {totalCountyCitys}
                       </Typography>
                     )}
@@ -93,16 +94,16 @@ export const Dashboard = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={4} lg={4} xl={3}>
+            <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
               <Card>
                 <CardContent>
-                  <Typography variant='h5' align='center'>
+                  <Typography color={'#c1c1c1'} align='right' fontWeight={100}>
                       Total de vendas
                   </Typography>
 
-                  <Box padding={6} display='flex' justifyContent='center' alignItems='center'>
+                  <Box padding={1} display='flex' justifyContent='right' alignItems='center'>
                     {!isLoadingCitys &&(
-                      <Typography variant='h1'>
+                      <Typography variant='h6'>
                         10
                       </Typography>
                     )}
