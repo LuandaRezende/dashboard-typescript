@@ -101,6 +101,12 @@
       "email": "teste@nova.com",
       "cityId": 1,
       "id": 22
+    },
+    {
+      "fullName": "TESTE",
+      "email": "TESTE@GMAIL.COM",
+      "cityId": 3,
+      "id": 23
     }
   ],
   "citys": [

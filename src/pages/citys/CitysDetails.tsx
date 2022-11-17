@@ -1,4 +1,4 @@
-import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
+import { Alert, Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToobarDetail } from '../../shared/components';
@@ -15,12 +15,50 @@ const formValidationSchema: yup.SchemaOf<IFormData> = yup.object().shape({
   name: yup.string().required().min(3),
 });
 
+interface IAlertC{
+  typeMessage: string;
+  alertMessage: string;
+}
+
+export const AlertComponentC: React.FC<IAlertC> = ({ typeMessage, alertMessage }) => {
+  return(
+    <div>
+      {typeMessage === 'warning' && (
+        <Alert severity="warning">
+          {alertMessage}
+        </Alert>
+      )}
+
+      {typeMessage === 'error' && (
+        <Alert severity="error">
+          {alertMessage}
+        </Alert>
+      )}
+
+      {typeMessage === 'success' && (
+        <Alert severity="success">
+          {alertMessage}
+        </Alert>
+      )}
+
+      {typeMessage === 'info' && (
+        <Alert severity="info">
+          {alertMessage}
+        </Alert>
+      )}
+    </div>
+  );
+};
+
 export const CitysDetails: React.FC = () => {
   const { id = 'new' } = useParams<'id'>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const { formRef, save, saveAndClose, isSaveAndClose } = useVForm();
+  const [ alert, setAlert ] = useState(false);
+  const [ typeMessage, setTypeMessage ] = useState('success');
+  const [ alertMessage, setAlertMessage ] = useState('');
 
   useEffect(() => {
     if(id !== 'new'){
@@ -30,11 +68,16 @@ export const CitysDetails: React.FC = () => {
           setIsLoading(false);  
 
           if(result instanceof Error){
-            alert(result.message);
+            setAlert(true);
+            setTypeMessage('error');
+            setAlertMessage(result.message);
             navigate('/citys');
           }else{
             setName(result.name);
             formRef.current?.setData(result);
+            setAlert(true);
+            setTypeMessage('success');
+            setAlertMessage('Salvo com sucesso');
           } 
         }
       ); 
@@ -52,27 +95,48 @@ export const CitysDetails: React.FC = () => {
       if(id === 'new'){
         CitysService.create(dataValidated).then((result) => {
           if(result instanceof Error){ 
-            alert(result.message);
+            setAlert(true);
+            setTypeMessage('error');
+            setAlertMessage(result.message);
+            navigate('/citys');
           }else{
             if(isSaveAndClose()){
               navigate('/citys');
+              setAlert(true);
+              setTypeMessage('success');
+              setAlertMessage('Salvo com sucesso');
             }else{
               navigate(`/citys/details/${result}`);
+              setAlert(true);
+              setTypeMessage('success');
+              setAlertMessage('Salvo com sucesso');
             }
           }
         });
+
+        setTimeout(() => {
+          setAlert(false);
+        }, 2000);
       }else{
         CitysService.updateById(Number(id), {id: Number(id), ...dataValidated}).then(
           (result) => {
             setIsLoading(false);  
       
             if(result instanceof Error){
-              alert(result.message);
+              setAlert(true);
+              setTypeMessage('error');
+              setAlertMessage(result.message);
             }else{
               if(isSaveAndClose()){
                 navigate('/citys');
+                setAlert(true);
+                setTypeMessage('success');
+                setAlertMessage('Salvo com sucesso');
               }
             }
+            setTimeout(() => {
+              setAlert(false);
+            }, 2000);
           }
         ); 
       }
@@ -99,18 +163,25 @@ export const CitysDetails: React.FC = () => {
       CitysService.deleteById(id)
         .then(result => {
           if(result instanceof Error){
-            alert(result.message);
+            setAlert(true);
+            setTypeMessage('error');
+            setAlertMessage(result.message);
           }else{
-            alert('Registro apagado com sucesso!');
+            setAlert(true);
+            setTypeMessage('success');
+            setAlertMessage('Apagado com sucesso');
             navigate('/citys');
           }
+          setTimeout(() => {
+            setAlert(false);
+          }, 2000);
         });
     }
   };
     
   return (
     <BaseLayout 
-      title={id === 'new' ? 'Nova pessoa' : `Edição de ${name}`}
+      title={id === 'new' ? 'Nova cidade' : `Edição de ${name}`}
       toolbar={
         <ToobarDetail 
           textNewButton="Nova"
@@ -125,6 +196,10 @@ export const CitysDetails: React.FC = () => {
         />
       }
     >
+
+      {alert && (<div>
+        <AlertComponentC typeMessage={typeMessage} alertMessage={alertMessage} />
+      </div>)}
 
       <VForm ref={formRef} onSubmit={(dataForm) => handleSave(dataForm)} initialData={{}}>
         <Box margin={1} display="flex" flexDirection="column" component={Paper} variant="outlined">
