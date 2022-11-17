@@ -14,9 +14,9 @@
     },
     {
       "id": 3,
+      "fullName": "José Silva",
       "email": "jose@gmail.com",
-      "cityId": 1,
-      "fullName": "José Silva"
+      "cityId": 1
     },
     {
       "id": 4,
@@ -91,10 +91,16 @@
       "id": 20
     },
     {
+      "id": 21,
       "fullName": "Luluzinha",
       "email": "lulu@gmail.com",
-      "cityId": 2,
-      "id": 21
+      "cityId": 2
+    },
+    {
+      "fullName": "Nova pessoa ",
+      "email": "teste@nova.com",
+      "cityId": 1,
+      "id": 22
     }
   ],
   "citys": [
@@ -105,6 +111,10 @@
     {
       "name": "Santa Rita do Sapucaí",
       "id": 2
+    },
+    {
+      "name": "Campos do Jordão",
+      "id": 3
     }
   ],
   "auth": {

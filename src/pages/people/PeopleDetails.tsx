@@ -1,4 +1,4 @@
-import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
+import { Alert, Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToobarDetail } from '../../shared/components';
@@ -20,12 +20,50 @@ const formValidationSchema: yup.SchemaOf<IFormData> = yup.object().shape({
   cityId: yup.number().required(),
 });
 
+interface IAlert{
+  typeMessage: string;
+  alertMessage: string;
+}
+
+export const AlertComponent: React.FC<IAlert> = ({ typeMessage, alertMessage }) => {
+  return(
+    <div>
+      {typeMessage === 'warning' && (
+        <Alert severity="warning">
+          {alertMessage}
+        </Alert>
+      )}
+
+      {typeMessage === 'error' && (
+        <Alert severity="error">
+          {alertMessage}
+        </Alert>
+      )}
+
+      {typeMessage === 'success' && (
+        <Alert severity="success">
+          {alertMessage}
+        </Alert>
+      )}
+
+      {typeMessage === 'info' && (
+        <Alert severity="info">
+          {alertMessage}
+        </Alert>
+      )}
+    </div>
+  );
+};
+
 export const PeopleDetails: React.FC = () => {
   const { id = 'new' } = useParams<'id'>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
   const { formRef, save, saveAndClose, isSaveAndClose } = useVForm();
+  const [ alert, setAlert ] = useState(false);
+  const [ typeMessage, setTypeMessage ] = useState('success');
+  const [ alertMessage, setAlertMessage ] = useState('');
 
   useEffect(() => {
     if(id !== 'new'){
@@ -35,7 +73,9 @@ export const PeopleDetails: React.FC = () => {
           setIsLoading(false);  
 
           if(result instanceof Error){
-            alert(result.message);
+            setAlert(true);
+            setTypeMessage('error');
+            setAlertMessage(result.message);
             navigate('/people');
           }else{
             setName(result.fullName);
@@ -59,14 +99,22 @@ export const PeopleDetails: React.FC = () => {
       if(id === 'new'){
         PeopleService.create(dataValidated).then((result) => {
           if(result instanceof Error){ 
-            alert(result.message);
+            setAlert(true);
+            setTypeMessage('error');
+            setAlertMessage(result.message);
           }else{
             if(isSaveAndClose()){
               navigate('/people');
             }else{
               navigate(`/people/details/${result}`);
             }
+            setAlert(true);
+            setTypeMessage('success');
+            setAlertMessage('Salvo com sucesso');
           }
+          setTimeout(() => {
+            setAlert(false);
+          }, 2000);
         });
       }else{
         PeopleService.updateById(Number(id), {id: Number(id), ...dataValidated}).then(
@@ -74,12 +122,20 @@ export const PeopleDetails: React.FC = () => {
             setIsLoading(false);  
       
             if(result instanceof Error){
-              alert(result.message);
+              setAlert(true);
+              setTypeMessage('error');
+              setAlertMessage(result.message);
             }else{
               if(isSaveAndClose()){
                 navigate('/people');
               }
+              setAlert(true);
+              setTypeMessage('success');
+              setAlertMessage('Salvo com sucesso');
             }
+            setTimeout(() => {
+              setAlert(false);
+            }, 2000);
           }
         ); 
       }
@@ -106,9 +162,13 @@ export const PeopleDetails: React.FC = () => {
       PeopleService.deleteById(id)
         .then(result => {
           if(result instanceof Error){
-            alert(result.message);
+            setAlert(true);
+            setTypeMessage('error');
+            setAlertMessage(result.message);
           }else{
-            alert('Registro apagado com sucesso!');
+            setAlert(true);
+            setTypeMessage('success');
+            setAlertMessage('Registro apagado com sucesso');
             navigate('/people');
           }
         });
@@ -133,6 +193,9 @@ export const PeopleDetails: React.FC = () => {
         />
       }
     >
+      {alert && (<div>
+        <AlertComponent typeMessage={typeMessage} alertMessage={alertMessage} />
+      </div>)}
 
       <VForm ref={formRef} onSubmit={(dataForm) => handleSave(dataForm)} initialData={{}}>
         <Box margin={1} display="flex" flexDirection="column" component={Paper} variant="outlined">
