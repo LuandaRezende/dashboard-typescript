@@ -79,7 +79,7 @@ export const ListSales: React.FC = () => {
                   <IconButton size="small" onClick={() => handleDelete(row.id)}>
                     <Icon>delete</Icon>
                   </IconButton>
-                  <IconButton size="small" onClick={() => navigate(`/people/details/${row.id}`)}>
+                  <IconButton size="small" onClick={() => navigate(`/sales/details/${row.id}`)}>
                     <Icon>edit</Icon>
                   </IconButton>
                 </TableCell>

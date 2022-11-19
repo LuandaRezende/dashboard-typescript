@@ -14,7 +14,7 @@ interface IAutoCompletePeopleProps {
 }
 
 export const AutoCompletePeople: React.FC<IAutoCompletePeopleProps> = ({ isExternalLoading = false }) => {
-  const { fieldName, registerField, defaultValue, error, clearError } = useField('PeopleId');
+  const { fieldName, registerField, defaultValue, error, clearError } = useField('idPeople');
   const { debounce } = useDebounce();
   const [options, setOptions] = useState<TAutoCompleteOption[]>([]);
   const [ isLoading, setIsLoading] = useState(false);
@@ -72,7 +72,7 @@ export const AutoCompletePeople: React.FC<IAutoCompletePeopleProps> = ({ isExter
       renderInput={(params) => (
         <TextField 
           {...params}
-          label="Cidade"
+          label="Pessoa"
           helperText={error}
           error={!!error}
         />

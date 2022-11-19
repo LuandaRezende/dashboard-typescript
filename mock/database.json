@@ -19,12 +19,6 @@
       "cityId": 1
     },
     {
-      "id": 4,
-      "fullName": "Billy Silva",
-      "email": "billy@gmail.com",
-      "cityId": 1
-    },
-    {
       "id": 5,
       "fullName": "Lindsey Silva Edit",
       "email": "lindsey@gmail.com",
@@ -130,12 +124,27 @@
       "title": "Salgadinho",
       "description": "Salgadinho de 1kg para o final de semana",
       "value": 25
-    },{
+    },
+    {
       "idPeople": 8,
       "id": 2,
       "title": "Arroz",
       "description": "Arroz de 10kg para o final de semana",
       "value": 35
+    },
+    {
+      "id": 3,
+      "title": "teste",
+      "description": "descricao",
+      "value": 2,
+      "idPeople": 4
+    },
+    {
+      "id": 4,
+      "title": "feijao",
+      "description": "feijao pro domingao",
+      "value": 2,
+      "idPeople": 4
     }
   ],
   "auth": {

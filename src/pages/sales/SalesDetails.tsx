@@ -7,17 +7,20 @@ import { BaseLayout } from '../../shared/layouts';
 import { PeopleService } from '../../shared/services/api/people/PeopleService';
 import * as yup from 'yup';
 import { AutoCompletePeople } from './components/AutoCompletePeople';
+import { SalesService } from '../../shared/services/api/sales/SalesService';
 
 interface IFormData{
-    email: string;
-    fullName: string;
-    PeopleId: number;
+    title: string;
+    description: string;
+    value: number;
+    idPeople: number;
 }
 
 const formValidationSchema: yup.SchemaOf<IFormData> = yup.object().shape({
-  fullName: yup.string().required().min(3),
-  email: yup.string().required().email(),
-  PeopleId: yup.number().required(),
+  title: yup.string().required().min(3),
+  description: yup.string().required(),
+  value: yup.number().required(),
+  idPeople: yup.number().required(),
 });
 
 interface IAlert{
@@ -59,7 +62,7 @@ export const SalesDetails: React.FC = () => {
   const { id = 'new' } = useParams<'id'>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const { formRef, save, saveAndClose, isSaveAndClose } = useVForm();
   const [ alert, setAlert ] = useState(false);
   const [ typeMessage, setTypeMessage ] = useState('success');
@@ -68,7 +71,7 @@ export const SalesDetails: React.FC = () => {
   useEffect(() => {
     if(id !== 'new'){
       setIsLoading(true);
-      PeopleService.getById(Number(id)).then(
+      SalesService.getById(Number(id)).then(
         (result) => {
           setIsLoading(false);  
 
@@ -78,16 +81,17 @@ export const SalesDetails: React.FC = () => {
             setAlertMessage(result.message);
             navigate('/people');
           }else{
-            setName(result.fullName);
+            setTitle(result.title);
             formRef.current?.setData(result);
           } 
         }
       ); 
     }else{
       formRef.current?.setData({
-        fullName: '',
-        PeopleId: undefined,
-        email: '',
+        title: '',
+        idPeople: undefined,
+        description: '',
+        value: 0,
       });
     }
   }, [id]);
@@ -97,47 +101,48 @@ export const SalesDetails: React.FC = () => {
       abortEarly: false
     }).then((dataValidated) => {
       if(id === 'new'){
-        // PeopleService.create(dataValidated).then((result) => {
-        //   if(result instanceof Error){ 
-        //     setAlert(true);
-        //     setTypeMessage('error');
-        //     setAlertMessage(result.message);
-        //   }else{
-        //     if(isSaveAndClose()){
-        //       navigate('/people');
-        //     }else{
-        //       navigate(`/people/details/${result}`);
-        //     }
-        //     setAlert(true);
-        //     setTypeMessage('success');
-        //     setAlertMessage('Salvo com sucesso');
-        //   }
-        //   setTimeout(() => {
-        //     setAlert(false);
-        //   }, 2000);
-        // });
+        console.log('dataValidated', dataValidated);
+        SalesService.create(dataValidated).then((result) => {
+          if(result instanceof Error){ 
+            setAlert(true);
+            setTypeMessage('error');
+            setAlertMessage(result.message);
+          }else{
+            if(isSaveAndClose()){
+              navigate('/sales');
+            }else{
+              navigate(`/sales/details/${result}`);
+            }
+            setAlert(true);
+            setTypeMessage('success');
+            setAlertMessage('Salvo com sucesso');
+          }
+          setTimeout(() => {
+            setAlert(false);
+          }, 2000);
+        });
       }else{
-        // PeopleService.updateById(Number(id), {id: Number(id), ...dataValidated}).then(
-        //   (result) => {
-        //     setIsLoading(false);  
+        SalesService.updateById(Number(id), {id: Number(id), ...dataValidated}).then(
+          (result) => {
+            setIsLoading(false);  
       
-        //     if(result instanceof Error){
-        //       setAlert(true);
-        //       setTypeMessage('error');
-        //       setAlertMessage(result.message);
-        //     }else{
-        //       if(isSaveAndClose()){
-        //         navigate('/people');
-        //       }
-        //       setAlert(true);
-        //       setTypeMessage('success');
-        //       setAlertMessage('Salvo com sucesso');
-        //     }
-        //     setTimeout(() => {
-        //       setAlert(false);
-        //     }, 2000);
-        //   }
-        // ); 
+            if(result instanceof Error){
+              setAlert(true);
+              setTypeMessage('error');
+              setAlertMessage(result.message);
+            }else{
+              if(isSaveAndClose()){
+                navigate('/sales');
+              }
+              setAlert(true);
+              setTypeMessage('success');
+              setAlertMessage('Salvo com sucesso');
+            }
+            setTimeout(() => {
+              setAlert(false);
+            }, 2000);
+          }
+        ); 
       }
     }).catch((errors: yup.ValidationError) => {
       setIsLoading(false);  
@@ -169,7 +174,7 @@ export const SalesDetails: React.FC = () => {
             setAlert(true);
             setTypeMessage('success');
             setAlertMessage('Registro apagado com sucesso');
-            navigate('/people');
+            navigate('/sales');
           }
         });
     }
@@ -177,7 +182,7 @@ export const SalesDetails: React.FC = () => {
     
   return (
     <BaseLayout 
-      title={id === 'new' ? 'Nova pessoa' : `Edição de ${name}`}
+      title={id === 'new' ? 'Nova venda' : `Edição de ${name}`}
       toolbar={
         <ToobarDetail 
           textNewButton="Nova"
@@ -213,13 +218,19 @@ export const SalesDetails: React.FC = () => {
 
             <Grid container item direction="row" spacing={2}>
               <Grid item xs={12} sm={8} md={6} lg={4} xl={2}>
-                <VTextField fullWidth label='Nome completo' onChange={(e) => setName(e.target.value)} name="fullName" disabled={isLoading}/>
+                <VTextField fullWidth label='Título da venda' onChange={(e) => setTitle(e.target.value)} name="title" disabled={isLoading}/>
               </Grid>
             </Grid>
 
             <Grid container item direction="row" spacing={2}>
               <Grid item xs={12} sm={8} md={6} lg={4} xl={2}>
-                <VTextField fullWidth label='Email' name="email" disabled={isLoading} />
+                <VTextField fullWidth label='Descrição' name="description" disabled={isLoading} />
+              </Grid>
+            </Grid>
+
+            <Grid container item direction="row" spacing={2}>
+              <Grid item xs={12} sm={8} md={6} lg={4} xl={2}>
+                <VTextField fullWidth label='Preço' name="value" disabled={isLoading} />
               </Grid>
             </Grid>
 

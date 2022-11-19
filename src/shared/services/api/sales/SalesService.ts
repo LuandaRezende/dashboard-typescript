@@ -13,8 +13,8 @@ export interface ISalesDetails {
     id: number,
     idPeople: number,
     title: string,
-    description: number,
-    value: string,
+    description: string,
+    value: number,
 }
 
 type TSalesWithTotalCount = {
