@@ -25,10 +25,34 @@
       "cityId": 1
     },
     {
-      "id": 9,
+      "id": 5,
       "fullName": "Lindsey Silva Edit",
       "email": "lindsey@gmail.com",
       "cityId": 1
+    },
+    {
+      "id": 6,
+      "email": "lindsey@gmail.com",
+      "cityId": 1,
+      "fullName": "Lindsey Silva"
+    },
+    {
+      "id": 7,
+      "email": "lindsey@gmail.com",
+      "cityId": 1,
+      "fullName": "Lindsey Silva"
+    },
+    {
+      "id": 8,
+      "email": "lindsey@gmail.com",
+      "cityId": 1,
+      "fullName": "Lindsey Silva"
+    },
+    {
+      "id": 9,
+      "email": "lindsey@gmail.com",
+      "cityId": 1,
+      "fullName": "Lindsey Silva"
     },
     {
       "id": 10,
@@ -44,30 +68,6 @@
     },
     {
       "id": 12,
-      "email": "lindsey@gmail.com",
-      "cityId": 1,
-      "fullName": "Lindsey Silva"
-    },
-    {
-      "id": 13,
-      "email": "lindsey@gmail.com",
-      "cityId": 1,
-      "fullName": "Lindsey Silva"
-    },
-    {
-      "id": 14,
-      "email": "lindsey@gmail.com",
-      "cityId": 1,
-      "fullName": "Lindsey Silva"
-    },
-    {
-      "id": 16,
-      "email": "lindsey@gmail.com",
-      "cityId": 1,
-      "fullName": "Lindsey Silva"
-    },
-    {
-      "id": 17,
       "email": "kreuza@gmail.com",
       "cityId": 1,
       "fullName": "Kreuza Silva"
@@ -76,19 +76,19 @@
       "fullName": "Jucicleia",
       "email": "jucicleia@gmail.com",
       "cityId": "2",
-      "id": 18
+      "id": 13
     },
     {
       "fullName": "Matheus Abreu",
       "email": "matheusabc@gmail.com",
       "cityId": "2",
-      "id": 19
+      "id": 14
     },
     {
       "fullName": "Madona",
       "email": "madonabrasil@gmail.com",
       "cityId": "3",
-      "id": 20
+      "id": 15
     },
     {
       "id": 21,
@@ -123,10 +123,19 @@
       "id": 3
     }
   ],
-  "sale": [
+  "sales": [
     {
-      "idSeller": 1,
-      "id": 1
+      "idPeople": 1,
+      "id": 1,
+      "title": "Salgadinho",
+      "description": "Salgadinho de 1kg para o final de semana",
+      "value": 25
+    },{
+      "idPeople": 8,
+      "id": 2,
+      "title": "Arroz",
+      "description": "Arroz de 10kg para o final de semana",
+      "value": 35
     }
   ],
   "auth": {
