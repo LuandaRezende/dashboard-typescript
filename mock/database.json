@@ -123,6 +123,12 @@
       "id": 3
     }
   ],
+  "sale": [
+    {
+      "idSeller": 1,
+      "id": 1
+    }
+  ],
   "auth": {
     "accessToken": "token-access-fake"
   }
