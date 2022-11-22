@@ -30,7 +30,6 @@ const getAll = async (page = 1, filter = ''): Promise<TCitysWithTotalCount | Err
 
     return new Error('Error to list records.');
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to list records.');
   }
 };
@@ -45,7 +44,6 @@ const getById = async (id: number): Promise<ICitysDetails | Error> => {
 
     return new Error('Error to consult records.');
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to create record.');
   }
 };
@@ -60,7 +58,6 @@ const create = async (dataSent: Omit<ICitysDetails, 'id'>): Promise<number | Err
 
     return new Error('Error to create records.');
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to create records.');
   }
 };
@@ -69,7 +66,6 @@ const updateById = async (id: number, dataSent: ICitysDetails): Promise<void | E
   try {
     await Api.put<IListCitys>(`/citys/${id}`, dataSent);
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to update record.');
   }
 };
@@ -78,7 +74,6 @@ const deleteById = async (id: number): Promise<void | Error> => {
   try {
     await Api.delete<IListCitys>(`/citys/${id}`);
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to delete record.');
   }
 };

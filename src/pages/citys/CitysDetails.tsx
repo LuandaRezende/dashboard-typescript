@@ -153,7 +153,6 @@ export const CitysDetails: React.FC = () => {
         ValidationErrors[error.path] = error.message;
       });
 
-      console.log(ValidationErrors);
       formRef.current?.setErrors(ValidationErrors);
     });
   };
