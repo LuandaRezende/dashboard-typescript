@@ -37,7 +37,7 @@ export const ListSales: React.FC = () => {
         }
   
         setRows(result.listData);
-        setTotalCount(result.totalCount);
+        setTotalCount(result.totalByPagination);
       });
     }); 
   }, [search, page]);

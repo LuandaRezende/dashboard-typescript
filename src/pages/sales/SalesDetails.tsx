@@ -101,7 +101,6 @@ export const SalesDetails: React.FC = () => {
       abortEarly: false
     }).then((dataValidated) => {
       if(id === 'new'){
-        console.log('dataValidated', dataValidated);
         SalesService.create(dataValidated).then((result) => {
           if(result instanceof Error){ 
             setAlert(true);
@@ -157,7 +156,6 @@ export const SalesDetails: React.FC = () => {
         ValidationErrors[error.path] = error.message;
       });
 
-      console.log(ValidationErrors);
       formRef.current?.setErrors(ValidationErrors);
     });
   };
@@ -182,7 +180,7 @@ export const SalesDetails: React.FC = () => {
     
   return (
     <BaseLayout 
-      title={id === 'new' ? 'Nova venda' : `Edição de ${name}`}
+      title={id === 'new' ? 'Nova venda' : `Edição da venda "${title}"`}
       toolbar={
         <ToobarDetail 
           textNewButton="Nova"

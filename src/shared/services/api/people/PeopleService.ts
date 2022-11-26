@@ -34,7 +34,6 @@ const getAll = async (page = 1, filter = ''): Promise<TPeopleWithTotalCount | Er
 
     return new Error('Error to list records.');
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to list records.');
   }
 };
@@ -49,7 +48,6 @@ const getById = async (id: number): Promise<IPeopleDetails | Error> => {
 
     return new Error('Error to consult records.');
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to create record.');
   }
 };
@@ -64,7 +62,6 @@ const create = async (dataSent: Omit<IPeopleDetails, 'id'>): Promise<number | Er
 
     return new Error('Error to create records.');
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to create records.');
   }
 };
@@ -73,7 +70,6 @@ const updateById = async (id: number, dataSent: IPeopleDetails): Promise<void | 
   try {
     await Api.put<IListPeople>(`/people/${id}`, dataSent);
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to update record.');
   }
 };
@@ -82,7 +78,6 @@ const deleteById = async (id: number): Promise<void | Error> => {
   try {
     await Api.delete<IListPeople>(`/people/${id}`);
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to delete record.');
   }
 };

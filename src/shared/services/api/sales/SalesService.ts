@@ -6,7 +6,7 @@ export interface IListSales {
    namePerson: number,
    title: string,
    description: number,
-   value: string,
+   value: number,
 }
 
 export interface ISalesDetails {
@@ -17,9 +17,25 @@ export interface ISalesDetails {
     value: number,
 }
 
+export interface IQuantitySales {
+ id: number,
+ value: number,
+ name: string
+}
+
+export interface IListSales {
+  id: number,
+  namePerson: number,
+  title: string,
+  description: number,
+  value: number,
+}
+
 type TSalesWithTotalCount = {
     listData: IListSales[];
     totalCount: number;
+    totalByPagination: number;
+    quantitySales: IQuantitySales[]
 }
 
 const getAll = async (page = 1, filter = ''): Promise<TSalesWithTotalCount | Error> => {
@@ -28,8 +44,12 @@ const getAll = async (page = 1, filter = ''): Promise<TSalesWithTotalCount | Err
     const { data, headers } = await Api.get(relativeUrl);
 
     const allPeople = await Api.get('/people');
+    const allSales = await Api.get('/sales');
+
+    let totalValues = 0;
 
     const listData = [];
+    const listSales = [];
 
     for(let i = 0; i < allPeople.data.length; i++){
       for(let j = 0; j < data.length; j++){
@@ -39,23 +59,37 @@ const getAll = async (page = 1, filter = ''): Promise<TSalesWithTotalCount | Err
             namePerson: allPeople.data[i].fullName,
             value: data[j].value,
             title: data[j].title,
-            description: data[j].description
+            description: data[j].description,
           });
         }
-
       }
+
+      for(let j = 0; j < allSales.data.length; j++){
+        if(allPeople.data[i].id === allSales.data[j].idPeople){
+          listSales.push({
+            id: allSales.data[j].idPeople,
+            name: allPeople.data[i].fullName,
+            value: allSales.data[j].value,
+          });
+        }
+      }
+    }
+
+    for(let j = 0; j < data.length; j++){
+      totalValues = totalValues + data[j].value;
     }
 
     if(data){
       return{
         listData,
-        totalCount: Number(headers['x-total-count'] || Environment.LINE_LIMIT)
+        totalCount: totalValues,
+        totalByPagination: Number(headers['x-total-count'] || Environment.LINE_LIMIT),
+        quantitySales: listSales
       };
     }
 
     return new Error('Error to list records.');
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to list records.');
   }
 };
@@ -70,7 +104,6 @@ const getById = async (id: number): Promise<ISalesDetails | Error> => {
 
     return new Error('Error to consult records.');
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to create record.');
   }
 };
@@ -85,7 +118,6 @@ const create = async (dataSent: Omit<ISalesDetails, 'id'>): Promise<number | Err
 
     return new Error('Error to create records.');
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to create records.');
   }
 };
@@ -94,7 +126,6 @@ const updateById = async (id: number, dataSent: ISalesDetails): Promise<void | E
   try {
     await Api.put<IListSales>(`/sales/${id}`, dataSent);
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to update record.');
   }
 };
@@ -103,7 +134,6 @@ const deleteById = async (id: number): Promise<void | Error> => {
   try {
     await Api.delete<IListSales>(`/people/${id}`);
   } catch (error) {
-    console.log(error);
     return new Error((error as {message: string}).message || 'Error to delete record.');
   }
 };
