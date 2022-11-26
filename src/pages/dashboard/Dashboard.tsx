@@ -1,10 +1,11 @@
-import { Box, Card, CardContent, CircularProgress, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, CircularProgress, Grid, Typography, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { BaseLayout } from '../../shared/layouts';
 import { CitysService } from '../../shared/services/api/citys/CitysService';
 import { PeopleService } from '../../shared/services/api/people/PeopleService';
 import { SalesService } from '../../shared/services/api/sales/SalesService';
 import { BarChart } from '../../shared/components/graphics/BarChart';
+import { PieChart } from '../../shared/components/graphics/PieChart';
 
 export const Dashboard = () => {
   const [isLoadingCitys, setIsLoadingCitys] = useState(true);
@@ -15,6 +16,7 @@ export const Dashboard = () => {
   const [totalCountySales, setTotalCountSales] = useState(0);
   const [sellers, setSellers] = useState<string[]>([]);
   const [sales, setSales] = useState<number[]>([]);
+  const theme = useTheme();
 
   useEffect(() => {
     setIsLoadingCitys(true);
@@ -77,8 +79,6 @@ export const Dashboard = () => {
 
       setSellers(getSellers);
       setSales(getSalesBySellers);
-
-      console.log('props', getSellers);
       
       setTotalCountSales(result.totalCount);
     });
@@ -164,11 +164,21 @@ export const Dashboard = () => {
               </Card>
             </Grid>
 
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
               <Card>
                 <CardContent>
-                  <Box padding={1} display='flex' justifyContent='center' alignItems='center'>
+                  <Box height={theme.spacing(85)} padding={1} display='flex' justifyContent='center' alignItems='center'>
                     <BarChart sellers={sellers} values={sales} />
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
+              <Card>
+                <CardContent>
+                  <Box height={theme.spacing(85)} padding={1} display='flex' justifyContent='center' alignItems='center'>
+                    <PieChart sellers={sellers} values={sales} />
                   </Box>
                 </CardContent>
               </Card>

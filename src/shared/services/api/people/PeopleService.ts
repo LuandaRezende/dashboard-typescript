@@ -38,6 +38,24 @@ const getAll = async (page = 1, filter = ''): Promise<TPeopleWithTotalCount | Er
   }
 };
 
+const getPeopleAutoComplete = async (filter = ''): Promise<TPeopleWithTotalCount | Error> => {
+  try {
+    const relativeUrl = `/people?&fullName_like=${filter}`;
+    const { data, headers } = await Api.get(relativeUrl);
+
+    if(data){
+      return{
+        data,
+        totalCount: Number(headers['x-total-count'] || Environment.LINE_LIMIT)
+      };
+    }
+
+    return new Error('Error to list records.');
+  } catch (error) {
+    return new Error((error as {message: string}).message || 'Error to list records.');
+  }
+};
+
 const getById = async (id: number): Promise<IPeopleDetails | Error> => {
   try {
     const { data } = await Api.get(`/people/${id}`);
@@ -87,5 +105,6 @@ export const PeopleService = {
   getById,
   create,
   updateById,
-  deleteById
+  deleteById,
+  getPeopleAutoComplete
 };

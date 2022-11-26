@@ -1,4 +1,4 @@
-import { Box, Button, Paper, TextField, useTheme, Icon } from '@mui/material';
+import { Box, Button, TextField, useTheme, Icon } from '@mui/material';
 import { Environment } from '../../environment';
 
 interface IToolbarListProps{

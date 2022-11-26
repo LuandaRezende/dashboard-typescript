@@ -25,7 +25,7 @@ export const AutoCompletePeople: React.FC<IAutoCompletePeopleProps> = ({ isExter
     setIsLoading(true);
 
     debounce(() => {
-      PeopleService.getAll(1).then((result) => {
+      PeopleService.getPeopleAutoComplete().then((result) => {
         setIsLoading(false);
 
         if(result instanceof Error){

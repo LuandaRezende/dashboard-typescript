@@ -115,6 +115,22 @@
     {
       "name": "Campos do Jordão",
       "id": 3
+    },
+    {
+      "name": "Nova Iguaçu",
+      "id": 4
+    },
+    {
+      "name": "São Paulo",
+      "id": 5
+    },
+    {
+      "name": "Paraisopolis",
+      "id": 6
+    },
+    {
+      "name": "Londrina",
+      "id": 7
     }
   ],
   "sales": [
@@ -166,6 +182,20 @@
       "description": "teste",
       "title": "abcdefg",
       "id": 7
+    },
+    {
+      "idPeople": 2,
+      "value": 20,
+      "description": "venda de chiclete e salgadinho",
+      "title": "Venda do sabado",
+      "id": 8
+    },
+    {
+      "idPeople": 13,
+      "value": 50,
+      "description": "salgadinho cheetos, lays, ruffles pela metade do preço",
+      "title": "salgadinho",
+      "id": 9
     }
   ],
   "auth": {
