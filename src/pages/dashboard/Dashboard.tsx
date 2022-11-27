@@ -16,6 +16,8 @@ export const Dashboard = () => {
   const [totalCountySales, setTotalCountSales] = useState(0);
   const [sellers, setSellers] = useState<string[]>([]);
   const [sales, setSales] = useState<number[]>([]);
+  const [citys, setCitys] = useState<string[]>([]);
+  const [quantityPeople, setQuantityPeople] = useState<number[]>([]);
   const theme = useTheme();
 
   useEffect(() => {
@@ -41,7 +43,34 @@ export const Dashboard = () => {
         alert(result.message);
         return;
       }
-    
+
+      const values = result.quantityPeople;
+      
+      const newArray: {id: number; value: number; cityName: string}[] = [];
+
+      for(let i = 0; i < values.length; i++){
+        const found = newArray.find(element => element.id === values[i].id);
+
+        if(found){
+          const index = newArray.findIndex(element => element.id === values[i].id);
+          newArray[index].value = newArray[index].value + values[i].value;
+        }else{
+          newArray.push(values[i]);
+        }
+      }
+      
+      const getPeopleByCity: number[] = [];
+      
+      const getCitys = [];
+      
+      for(let a = 0; a < newArray.length; a++){
+        getCitys.push(newArray[a].cityName);
+        getPeopleByCity.push(newArray[a].value);
+      }
+
+      setQuantityPeople(getPeopleByCity);
+      setCitys(getCitys);
+
       setTotalCountPeople(result.totalCount);
     });
 
@@ -53,18 +82,18 @@ export const Dashboard = () => {
         return;
       }
 
-      const valor = result.quantitySales;
+      const values = result.quantitySales;
       
       const newArray: {id: number; value: number; name: string}[] = [];
 
-      for(let i = 0; i < valor.length; i++){
-        const found = newArray.find(element => element.id === valor[i].id);
+      for(let i = 0; i < values.length; i++){
+        const found = newArray.find(element => element.id === values[i].id);
 
         if(found){
-          const index = newArray.findIndex(element => element.id === valor[i].id);
-          newArray[index].value = newArray[index].value + valor[i].value;
+          const index = newArray.findIndex(element => element.id === values[i].id);
+          newArray[index].value = newArray[index].value + values[i].value;
         }else{
-          newArray.push(valor[i]);
+          newArray.push(values[i]);
         }
       }
       
@@ -178,7 +207,7 @@ export const Dashboard = () => {
               <Card>
                 <CardContent>
                   <Box height={theme.spacing(85)} padding={1} display='flex' justifyContent='center' alignItems='center'>
-                    <PieChart sellers={sellers} values={sales} />
+                    <PieChart citys={citys} values={quantityPeople} />
                   </Box>
                 </CardContent>
               </Card>

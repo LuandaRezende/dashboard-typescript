@@ -5,11 +5,11 @@ import { Pie } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface IProps {
-  sellers: string[],
+    citys: string[],
   values: number[]
 }
   
-export const PieChart: React.FC<IProps> = ({ sellers, values }) => {
+export const PieChart: React.FC<IProps> = ({ citys, values }) => {
 
   const options = {
     responsive: true,
@@ -19,18 +19,18 @@ export const PieChart: React.FC<IProps> = ({ sellers, values }) => {
       },
       title: {
         display: true,
-        text: 'Quantidade de vendas por vendedor',
+        text: 'Quantidade de pessoas por cidade',
       },
     },
   }; 
 
-  const labels = sellers;
+  const labels = citys;
   
   const data = {
     labels,
     datasets: [
       {
-        label: 'Total de vendas',
+        label: 'Total de pessoas',
         data: values,
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',

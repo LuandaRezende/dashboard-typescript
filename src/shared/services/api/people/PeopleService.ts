@@ -18,7 +18,14 @@ export interface IPeopleDetails {
 type TPeopleWithTotalCount = {
     data: IListPeople[];
     totalCount: number;
+    quantityPeople: IQuantityPeopleByCity[]
 }
+
+export interface IQuantityPeopleByCity {
+  id: number,
+  value: number,
+  cityName: string
+ }
 
 const getAll = async (page = 1, filter = ''): Promise<TPeopleWithTotalCount | Error> => {
   try {
@@ -26,9 +33,38 @@ const getAll = async (page = 1, filter = ''): Promise<TPeopleWithTotalCount | Er
     const { data, headers } = await Api.get(relativeUrl);
 
     if(data){
+      const allPeople = await Api.get('/people');
+      const allCitys = await Api.get('/citys');
+
+      const listData = [];
+      const listCitys = [];
+
+      for(let i = 0; i < allPeople.data.length; i++){
+        for(let j = 0; j < data.length; j++){
+          if(allPeople.data[i].cityId === data[j].id){
+            listData.push({
+              id: data[j].id,
+              cityName: allCitys.data[j].name,
+              value: 1,
+            });
+          }
+        }
+
+        for(let j = 0; j < allCitys.data.length; j++){
+          if(allPeople.data[i].cityId === allCitys.data[j].id){
+            listCitys.push({
+              id: allCitys.data[j].id,
+              cityName: allCitys.data[j].name,
+              value: 1,
+            });
+          }
+        }
+      }
+    
       return{
         data,
-        totalCount: Number(headers['x-total-count'] || Environment.LINE_LIMIT)
+        totalCount: Number(headers['x-total-count'] || Environment.LINE_LIMIT),
+        quantityPeople: listCitys
       };
     }
 
@@ -46,7 +82,8 @@ const getPeopleAutoComplete = async (filter = ''): Promise<TPeopleWithTotalCount
     if(data){
       return{
         data,
-        totalCount: Number(headers['x-total-count'] || Environment.LINE_LIMIT)
+        totalCount: Number(headers['x-total-count'] || Environment.LINE_LIMIT),
+        quantityPeople: []
       };
     }
 
