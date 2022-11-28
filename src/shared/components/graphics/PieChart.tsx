@@ -5,11 +5,11 @@ import { Pie } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface IProps {
-    citys: string[],
+    cities: string[],
   values: number[]
 }
   
-export const PieChart: React.FC<IProps> = ({ citys, values }) => {
+export const PieChart: React.FC<IProps> = ({ cities, values }) => {
 
   const options = {
     responsive: true,
@@ -24,7 +24,7 @@ export const PieChart: React.FC<IProps> = ({ citys, values }) => {
     },
   }; 
 
-  const labels = citys;
+  const labels = cities;
   
   const data = {
     labels,

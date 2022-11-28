@@ -2,7 +2,7 @@ import { Autocomplete, CircularProgress, TextField } from '@mui/material';
 import { useField } from '@unform/core';
 import { useEffect, useMemo, useState } from 'react';
 import { useDebounce } from '../../../shared/hooks';
-import { CitysService } from '../../../shared/services/api/citys/CitysService';
+import { CitiesService } from '../../../shared/services/api/cities/CitiesService';
 
 type TAutoCompleteOption = {
     id: number;
@@ -25,7 +25,7 @@ export const AutoCompleteCity: React.FC<IAutoCompleteCityProps> = ({ isExternalL
     setIsLoading(true);
 
     debounce(() => {
-      CitysService.getAll(1).then((result) => {
+      CitiesService.getAll(1).then((result) => {
         setIsLoading(false);
 
         if(result instanceof Error){

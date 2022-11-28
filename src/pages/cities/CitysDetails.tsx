@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ToobarDetail } from '../../shared/components';
 import { VTextField, VForm, useVForm, IVFormErrors } from '../../shared/forms';
 import { BaseLayout } from '../../shared/layouts';
-import { CitysService } from '../../shared/services/api/citys/CitysService';
+import { CitiesService } from '../../shared/services/api/cities/CitiesService';
 import * as yup from 'yup';
 
 interface IFormData{
@@ -50,7 +50,7 @@ export const AlertComponentC: React.FC<IAlertC> = ({ typeMessage, alertMessage }
   );
 };
 
-export const CitysDetails: React.FC = () => {
+export const CitiesDetails: React.FC = () => {
   const { id = 'new' } = useParams<'id'>();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +63,7 @@ export const CitysDetails: React.FC = () => {
   useEffect(() => {
     if(id !== 'new'){
       setIsLoading(true);
-      CitysService.getById(Number(id)).then(
+      CitiesService.getById(Number(id)).then(
         (result) => {
           setIsLoading(false);  
 
@@ -71,7 +71,7 @@ export const CitysDetails: React.FC = () => {
             setAlert(true);
             setTypeMessage('error');
             setAlertMessage(result.message);
-            navigate('/citys');
+            navigate('/cities');
           }else{
             setName(result.name);
             formRef.current?.setData(result);
@@ -93,20 +93,20 @@ export const CitysDetails: React.FC = () => {
       abortEarly: false
     }).then((dataValidated) => {
       if(id === 'new'){
-        CitysService.create(dataValidated).then((result) => {
+        CitiesService.create(dataValidated).then((result) => {
           if(result instanceof Error){ 
             setAlert(true);
             setTypeMessage('error');
             setAlertMessage(result.message);
-            navigate('/citys');
+            navigate('/cities');
           }else{
             if(isSaveAndClose()){
-              navigate('/citys');
+              navigate('/cities');
               setAlert(true);
               setTypeMessage('success');
               setAlertMessage('Salvo com sucesso');
             }else{
-              navigate(`/citys/details/${result}`);
+              navigate(`/cities/details/${result}`);
               setAlert(true);
               setTypeMessage('success');
               setAlertMessage('Salvo com sucesso');
@@ -118,7 +118,7 @@ export const CitysDetails: React.FC = () => {
           setAlert(false);
         }, 2000);
       }else{
-        CitysService.updateById(Number(id), {id: Number(id), ...dataValidated}).then(
+        CitiesService.updateById(Number(id), {id: Number(id), ...dataValidated}).then(
           (result) => {
             setIsLoading(false);  
       
@@ -128,7 +128,7 @@ export const CitysDetails: React.FC = () => {
               setAlertMessage(result.message);
             }else{
               if(isSaveAndClose()){
-                navigate('/citys');
+                navigate('/cities');
                 setAlert(true);
                 setTypeMessage('success');
                 setAlertMessage('Salvo com sucesso');
@@ -159,7 +159,7 @@ export const CitysDetails: React.FC = () => {
 
   const handleDelete = (id: number) => {
     if(confirm('Realmente deseja apagar?')){
-      CitysService.deleteById(id)
+      CitiesService.deleteById(id)
         .then(result => {
           if(result instanceof Error){
             setAlert(true);
@@ -169,7 +169,7 @@ export const CitysDetails: React.FC = () => {
             setAlert(true);
             setTypeMessage('success');
             setAlertMessage('Apagado com sucesso');
-            navigate('/citys');
+            navigate('/cities');
           }
           setTimeout(() => {
             setAlert(false);
@@ -190,8 +190,8 @@ export const CitysDetails: React.FC = () => {
           saveItem={save}
           saveAndCloseItem={saveAndClose}
           deleteItem={() => handleDelete(Number(id))}
-          newItem={() => {navigate('/citys/details/new');}}
-          returnItem={() => {navigate('/citys');}}
+          newItem={() => {navigate('/cities/details/new');}}
+          returnItem={() => {navigate('/cities');}}
         />
       }
     >

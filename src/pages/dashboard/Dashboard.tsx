@@ -1,39 +1,39 @@
 import { Box, Card, CardContent, CircularProgress, Grid, Typography, useTheme } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { BaseLayout } from '../../shared/layouts';
-import { CitysService } from '../../shared/services/api/citys/CitysService';
+import { CitiesService } from '../../shared/services/api/cities/CitiesService';
 import { PeopleService } from '../../shared/services/api/people/PeopleService';
 import { SalesService } from '../../shared/services/api/sales/SalesService';
 import { BarChart } from '../../shared/components/graphics/BarChart';
 import { PieChart } from '../../shared/components/graphics/PieChart';
 
 export const Dashboard = () => {
-  const [isLoadingCitys, setIsLoadingCitys] = useState(true);
+  const [isLoadingCities, setIsLoadingCities] = useState(true);
   const [isLoadingPeople, setIsLoadingPeople] = useState(true);
   const [isLoadingSales, setIsLoadingSales] = useState(true);
-  const [totalCountyCitys, setTotalCountCitys] = useState(0);
+  const [totalCountyCities, setTotalCountCities] = useState(0);
   const [totalCountyPeople, setTotalCountPeople] = useState(0);
   const [totalCountySales, setTotalCountSales] = useState(0);
   const [sellers, setSellers] = useState<string[]>([]);
   const [sales, setSales] = useState<number[]>([]);
-  const [citys, setCitys] = useState<string[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
   const [quantityPeople, setQuantityPeople] = useState<number[]>([]);
   const theme = useTheme();
 
   useEffect(() => {
-    setIsLoadingCitys(true);
+    setIsLoadingCities(true);
     setIsLoadingPeople(true);
     setIsLoadingSales(true);
   
-    CitysService.getAll(1).then((result) => {
-      setIsLoadingCitys(false);
+    CitiesService.getAll(1).then((result) => {
+      setIsLoadingCities(false);
   
       if(result instanceof Error){
         alert(result.message);
         return;
       }
     
-      setTotalCountCitys(result.totalCount);
+      setTotalCountCities(result.totalCount);
     });
 
     PeopleService.getAll(1).then((result) => {
@@ -61,15 +61,15 @@ export const Dashboard = () => {
       
       const getPeopleByCity: number[] = [];
       
-      const getCitys = [];
+      const getCities = [];
       
       for(let a = 0; a < newArray.length; a++){
-        getCitys.push(newArray[a].cityName);
+        getCities.push(newArray[a].cityName);
         getPeopleByCity.push(newArray[a].value);
       }
 
       setQuantityPeople(getPeopleByCity);
-      setCitys(getCitys);
+      setCities(getCities);
 
       setTotalCountPeople(result.totalCount);
     });
@@ -153,13 +153,13 @@ export const Dashboard = () => {
                   </Typography>
 
                   <Box padding={1} display='flex' justifyContent='right' alignItems='center'>
-                    {!isLoadingCitys &&(
+                    {!isLoadingCities &&(
                       <Typography variant='h6'>
-                        {totalCountyCitys}
+                        {totalCountyCities}
                       </Typography>
                     )}
 
-                    {isLoadingCitys && (
+                    {isLoadingCities && (
                       <Typography>
                         <CircularProgress size={30} />
                       </Typography>
@@ -207,7 +207,7 @@ export const Dashboard = () => {
               <Card>
                 <CardContent>
                   <Box height={theme.spacing(85)} padding={1} display='flex' justifyContent='center' alignItems='center'>
-                    <PieChart citys={citys} values={quantityPeople} />
+                    <PieChart cities={cities} values={quantityPeople} />
                   </Box>
                 </CardContent>
               </Card>

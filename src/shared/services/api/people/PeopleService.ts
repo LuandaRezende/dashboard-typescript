@@ -34,27 +34,27 @@ const getAll = async (page = 1, filter = ''): Promise<TPeopleWithTotalCount | Er
 
     if(data){
       const allPeople = await Api.get('/people');
-      const allCitys = await Api.get('/citys');
+      const allCities = await Api.get('/cities');
 
       const listData = [];
-      const listCitys = [];
+      const listCities = [];
 
       for(let i = 0; i < allPeople.data.length; i++){
         for(let j = 0; j < data.length; j++){
           if(allPeople.data[i].cityId === data[j].id){
             listData.push({
               id: data[j].id,
-              cityName: allCitys.data[j].name,
+              cityName: allCities.data[j].name,
               value: 1,
             });
           }
         }
 
-        for(let j = 0; j < allCitys.data.length; j++){
-          if(allPeople.data[i].cityId === allCitys.data[j].id){
-            listCitys.push({
-              id: allCitys.data[j].id,
-              cityName: allCitys.data[j].name,
+        for(let j = 0; j < allCities.data.length; j++){
+          if(allPeople.data[i].cityId === allCities.data[j].id){
+            listCities.push({
+              id: allCities.data[j].id,
+              cityName: allCities.data[j].name,
               value: 1,
             });
           }
@@ -64,7 +64,7 @@ const getAll = async (page = 1, filter = ''): Promise<TPeopleWithTotalCount | Er
       return{
         data,
         totalCount: Number(headers['x-total-count'] || Environment.LINE_LIMIT),
-        quantityPeople: listCitys
+        quantityPeople: listCities
       };
     }
 

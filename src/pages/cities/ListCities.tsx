@@ -4,15 +4,15 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ToolbarList } from '../../shared/components';
 import { useDebounce } from '../../shared/hooks';
 import { BaseLayout } from '../../shared/layouts';
-import { IListCitys, CitysService } from '../../shared/services/api/citys/CitysService';
+import { IListCities, CitiesService } from '../../shared/services/api/cities/CitiesService';
 import { Environment } from '../../shared/environment';
 
-export const ListCitys: React.FC = () => {
+export const ListCities: React.FC = () => {
   const [ searchParams, setSearchParams ] = useSearchParams(); 
   const { debounce } = useDebounce();
   const navigate = useNavigate();
 
-  const [rows, setRows] = useState<IListCitys[]>([]);
+  const [rows, setRows] = useState<IListCities[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,7 +28,7 @@ export const ListCitys: React.FC = () => {
     setIsLoading(true);
 
     debounce(() => {
-      CitysService.getAll(page, search).then((result) => {
+      CitiesService.getAll(page, search).then((result) => {
         setIsLoading(false);
 
         if(result instanceof Error){
@@ -44,7 +44,7 @@ export const ListCitys: React.FC = () => {
 
   const handleDelete = (id: number) => {
     if(confirm('Realmente deseja apagar?')){
-      CitysService.deleteById(id)
+      CitiesService.deleteById(id)
         .then(result => {
           if(result instanceof Error){
             alert(result.message);
@@ -60,7 +60,7 @@ export const ListCitys: React.FC = () => {
 
   return (
     <BaseLayout title="Listagem de cidades" 
-      toolbar={<ToolbarList clickAddNewPerson={() => navigate('/citys/details/new')} textNewButton="Nova" showInputSearch textSearch={search} changeTextSearch={text => setSearchParams({search: text, page: '1'}, {replace: true})}/>}>
+      toolbar={<ToolbarList clickAddNewPerson={() => navigate('/cities/details/new')} textNewButton="Nova" showInputSearch textSearch={search} changeTextSearch={text => setSearchParams({search: text, page: '1'}, {replace: true})}/>}>
       {rows.length > 0 && (<TableContainer component={Paper} variant="outlined" sx={{ mt: 1, width: 'auto' }}>
         <Table>
           <TableHead>
@@ -76,7 +76,7 @@ export const ListCitys: React.FC = () => {
                   <IconButton size="small" onClick={() => handleDelete(row.id)}>
                     <Icon>delete</Icon>
                   </IconButton>
-                  <IconButton size="small" onClick={() => navigate(`/citys/details/${row.id}`)}>
+                  <IconButton size="small" onClick={() => navigate(`/cities/details/${row.id}`)}>
                     <Icon>edit</Icon>
                   </IconButton>
                 </TableCell>
