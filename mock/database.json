@@ -135,14 +135,14 @@
   ],
   "sales": [
     {
-      "idPeople": 1,
+      "personId": 1,
       "id": 1,
       "title": "Salgadinho",
       "description": "Salgadinho de 1kg para o final de semana",
       "value": 25
     },
     {
-      "idPeople": 8,
+      "personId": 8,
       "id": 2,
       "title": "Arroz",
       "description": "Arroz de 10kg para o final de semana",
@@ -153,45 +153,45 @@
       "title": "teste",
       "description": "descricao",
       "value": 2,
-      "idPeople": 13
+      "personId": 13
     },
     {
       "id": 4,
       "title": "feijao",
       "description": "feijao pro domingao",
       "value": 2,
-      "idPeople": 13
+      "personId": 13
     },
     {
-      "idPeople": 2,
+      "personId": 2,
       "value": 120,
       "description": "descrição da venda 3",
       "title": "Venda 3",
       "id": 5
     },
     {
-      "idPeople": 6,
+      "personId": 6,
       "value": 10,
       "description": "venda teste",
       "title": "teste",
       "id": 6
     },
     {
-      "idPeople": 2,
+      "personId": 2,
       "value": 10,
       "description": "teste",
       "title": "abcdefg",
       "id": 7
     },
     {
-      "idPeople": 2,
+      "personId": 2,
       "value": 20,
       "description": "venda de chiclete e salgadinho",
       "title": "Venda do sabado",
       "id": 8
     },
     {
-      "idPeople": 13,
+      "personId": 13,
       "value": 50,
       "description": "salgadinho cheetos, lays, ruffles pela metade do preço",
       "title": "salgadinho",

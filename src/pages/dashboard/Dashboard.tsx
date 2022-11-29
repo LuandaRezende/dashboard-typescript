@@ -196,7 +196,7 @@ export const Dashboard = () => {
             <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
               <Card>
                 <CardContent>
-                  <Box height={theme.spacing(85)} padding={1} display='flex' justifyContent='center' alignItems='center'>
+                  <Box height={theme.spacing(60)} padding={1} display='flex' justifyContent='center' alignItems='center'>
                     <BarChart sellers={sellers} values={sales} />
                   </Box>
                 </CardContent>
@@ -206,7 +206,7 @@ export const Dashboard = () => {
             <Grid item xs={12} sm={12} md={5} lg={5} xl={5}>
               <Card>
                 <CardContent>
-                  <Box height={theme.spacing(85)} padding={1} display='flex' justifyContent='center' alignItems='center'>
+                  <Box height={theme.spacing(60)} padding={1} display='flex' justifyContent='center' alignItems='center'>
                     <PieChart cities={cities} values={quantityPeople} />
                   </Box>
                 </CardContent>

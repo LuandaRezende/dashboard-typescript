@@ -11,7 +11,7 @@ export interface IListSales {
 
 export interface ISalesDetails {
     id: number,
-    idPeople: number,
+    personId: number,
     title: string,
     description: string,
     value: number,
@@ -53,7 +53,7 @@ const getAll = async (page = 1, filter = ''): Promise<TSalesWithTotalCount | Err
 
     for(let i = 0; i < allPeople.data.length; i++){
       for(let j = 0; j < data.length; j++){
-        if(allPeople.data[i].id === data[j].idPeople){
+        if(allPeople.data[i].id === data[j].personId){
           listData.push({
             id: data[j].id,
             namePerson: allPeople.data[i].fullName,
@@ -65,9 +65,9 @@ const getAll = async (page = 1, filter = ''): Promise<TSalesWithTotalCount | Err
       }
 
       for(let j = 0; j < allSales.data.length; j++){
-        if(allPeople.data[i].id === allSales.data[j].idPeople){
+        if(allPeople.data[i].id === allSales.data[j].personId){
           listSales.push({
-            id: allSales.data[j].idPeople,
+            id: allSales.data[j].personId,
             name: allPeople.data[i].fullName,
             value: allSales.data[j].value,
           });

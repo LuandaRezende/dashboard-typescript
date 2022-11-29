@@ -13,14 +13,14 @@ interface IFormData{
     title: string;
     description: string;
     value: number;
-    idPeople: number;
+    personId: number;
 }
 
 const formValidationSchema: yup.SchemaOf<IFormData> = yup.object().shape({
   title: yup.string().required().min(3),
   description: yup.string().required(),
   value: yup.number().required(),
-  idPeople: yup.number().required(),
+  personId: yup.number().required(),
 });
 
 interface IAlert{
@@ -89,7 +89,7 @@ export const SalesDetails: React.FC = () => {
     }else{
       formRef.current?.setData({
         title: '',
-        idPeople: undefined,
+        personId: undefined,
         description: '',
         value: 0,
       });
